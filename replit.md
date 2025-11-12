@@ -84,6 +84,14 @@ npx prisma studio      # Open Prisma Studio GUI
 - Email integration via Brevo
 
 ## Recent Changes
+- **2025-11-12**: Database integration completed
+  - Integrated Prisma ORM with PostgreSQL database
+  - Users are now saved to PostgreSQL on signup
+  - Users are fetched from PostgreSQL on login
+  - Fixed LoginDto validation decorators
+  - Configured Prisma client with standard @prisma/client package
+  - All authentication endpoints working with persistent database storage
+  
 - **2025-11-12**: Initial project setup in Replit environment
   - Installed all dependencies
   - Configured PostgreSQL database
