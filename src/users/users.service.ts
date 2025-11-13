@@ -16,4 +16,8 @@ export class UsersService {
   create(user: Partial<User>): Promise<User> {
     return this.usersRepository.create(user);
   }
+
+  saveAuthToken(userId: number, token: string): Promise<User> {
+    return this.usersRepository.saveAuthToken(userId, token);
+  }
 }

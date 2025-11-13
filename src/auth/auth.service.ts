@@ -24,10 +24,21 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const user = await this.usersRepository.findByEmail(email);
+  
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new BadRequestException('Invalid credentials');
     }
-
-    return { accessToken: this.jwtService.sign({ sub: user.id, email: user.email }) };
+  
+    const accessToken = this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+    });
+  
+    await this.usersRepository.saveAuthToken(user.id, accessToken);
+  
+    return {
+      ...user,
+      authToken: accessToken,
+    };
   }
 }

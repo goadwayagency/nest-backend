@@ -1,18 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { IUsersRepository } from './interfaces/users-repository.interface';
 import { User } from './user.entity';
+import { prisma } from './../lib/prisma'
+
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
-  private users: User[] = [];
-
   async create(user: Partial<User>): Promise<User> {
-    const newUser = { id: Date.now(), ...user } as User;
-    this.users.push(newUser);
-    return newUser;
+    return prisma.user.create({
+      data: user as any,
+    });
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.users.find(u => u.email === email) || null;
+    return prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
+  async saveAuthToken(userId: number, token: string) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { authToken: token },
+    });
   }
 }
