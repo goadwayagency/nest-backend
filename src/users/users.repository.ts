@@ -18,7 +18,7 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async saveAuthToken(userId: number, token: string) {
+  async saveAuthToken(userId: string, token: string) {
     return prisma.user.update({
       where: { id: userId },
       data: { authToken: token },

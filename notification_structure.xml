@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Notification Architecture" id="notification_architecture">
+    <mxGraphModel dx="1120" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Event Start Nodes -->
+        <mxCell id="BuyerReferral" value="Buyer Referral Sign-Up" style="rounded=1;fillColor=#D5E8D4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="LoyaltyUnlock" value="Buyer Loyalty Unlock" style="rounded=1;fillColor=#D5E8D4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="SellerValidation" value="Seller Account Validated" style="rounded=1;fillColor=#FFE6CC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ChatBid" value="Chat / Bidding Event" style="rounded=1;fillColor=#E1D5E7;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="AdminUserChange" value="Admin Account Status Change" style="rounded=1;fillColor=#F8CECC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- EventBus Node -->
+        <mxCell id="EventBus" value="EventBus" style="rounded=1;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="240" y="200" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Handlers -->
+        <mxCell id="HandlerReferral" value="ReferralSignupHandler" style="rounded=1;fillColor=#D5D8DC;" vertex="1" parent="1">
+          <mxGeometry x="420" y="40" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="HandlerLoyalty" value="LoyaltyUnlockHandler" style="rounded=1;fillColor=#D5D8DC;" vertex="1" parent="1">
+          <mxGeometry x="420" y="140" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="HandlerSellerValidation" value="SellerValidationHandler" style="rounded=1;fillColor=#D5D8DC;" vertex="1" parent="1">
+          <mxGeometry x="420" y="240" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="HandlerChatBid" value="ChatBidHandler" style="rounded=1;fillColor=#D5D8DC;" vertex="1" parent="1">
+          <mxGeometry x="420" y="340" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="HandlerAdminUserChange" value="AdminUserChangeHandler" style="rounded=1;fillColor=#D5D8DC;" vertex="1" parent="1">
+          <mxGeometry x="420" y="440" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Notification Service -->
+        <mxCell id="NotificationService" value="NotificationService (UI / DB)" style="rounded=1;fillColor=#DFF0F0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="140" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Email Service -->
+        <mxCell id="EmailService" value="EmailService" style="rounded=1;fillColor=#FFF0F5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="40" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- WebSocket Gateway -->
+        <mxCell id="WebSocketGateway" value="WebSocketGateway (Real-time UI)" style="rounded=1;fillColor=#E6F2FF;" vertex="1" parent="1">
+          <mxGeometry x="620" y="240" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Connectors -->
+        <!-- Start → EventBus -->
+        <mxCell id="flow1" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="BuyerReferral" target="EventBus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow2" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="LoyaltyUnlock" target="EventBus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow3" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="SellerValidation" target="EventBus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow4" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="ChatBid" target="EventBus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow5" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="AdminUserChange" target="EventBus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- EventBus → Handlers -->
+        <mxCell id="flow6" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="EventBus" target="HandlerReferral">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow7" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="EventBus" target="HandlerLoyalty">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow8" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="EventBus" target="HandlerSellerValidation">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow9" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="EventBus" target="HandlerChatBid">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow10" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="EventBus" target="HandlerAdminUserChange">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Handlers → Services -->
+        <mxCell id="flow11" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerReferral" target="NotificationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow12" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerReferral" target="EmailService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow13" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="NotificationService" target="WebSocketGateway">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Similar flows for other handlers -->
+        <mxCell id="flow14" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerLoyalty" target="NotificationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow15" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerLoyalty" target="EmailService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow16" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerSellerValidation" target="NotificationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow17" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerSellerValidation" target="EmailService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow18" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerChatBid" target="NotificationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow19" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerChatBid" target="EmailService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow20" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerAdminUserChange" target="NotificationService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="flow21" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;" edge="1" parent="1" source="HandlerAdminUserChange" target="EmailService">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

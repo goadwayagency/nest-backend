@@ -1,7 +1,6 @@
-import { UserRole, UserStatus } from "./enums/user.enum";
-
+// I set the fields null for now just to move forward to the events
 export class User {
-  id: number;
+  id: string;
   email: string;
   password?: string;
   referralCode?: string | null;

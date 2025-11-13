@@ -1,21 +1,28 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { AuthService } from './services/auth.service';
 import { JwtService } from './jwt/jwt.service';
 import { UsersModule } from '../users/users.module';
 import { ReferralService } from './referral/referral.service';
+import { EventModule } from 'src/events/event.module';
+import { AuthController } from './controllers/auth.controller';
+import { PasswordService } from './services/password.service';
+import { EmailUniquePolicy } from './policies/email.policy';
+import { ReferralPolicy } from './policies/referral.policy';
 
 @Module({
-  imports: [UsersModule],
+  imports: [UsersModule, EventModule],
   controllers: [AuthController],
   providers: [
     AuthService,
     JwtService,
-    {
-      provide: 'IReferralValidator',
-      useClass: ReferralService,
-    },
+    PasswordService,
+
+    ReferralService,
+    { provide: 'IReferralValidator', useExisting: ReferralService },
+
+    { provide: 'EmailUniquePolicy', useClass: EmailUniquePolicy },
+    { provide: 'ReferralPolicy', useClass: ReferralPolicy },
   ],
-  exports: [AuthService],
+  exports: [AuthService, PasswordService],
 })
 export class AuthModule {}

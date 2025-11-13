@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { IUsersRepository } from './interfaces/users-repository.interface';
+import * as usersRepositoryInterface from './interfaces/users-repository.interface';
 import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('IUsersRepository')
-    private readonly usersRepository: IUsersRepository
+    private readonly usersRepository: usersRepositoryInterface.IUsersRepository
 ) {}
 
   findByEmail(email: string): Promise<User | null> {
@@ -17,7 +17,7 @@ export class UsersService {
     return this.usersRepository.create(user);
   }
 
-  saveAuthToken(userId: number, token: string): Promise<User> {
+  saveAuthToken(userId: string, token: string): Promise<User> {
     return this.usersRepository.saveAuthToken(userId, token);
   }
 }
