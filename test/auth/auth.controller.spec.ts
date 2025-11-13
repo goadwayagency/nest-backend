@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
-import { AuthController } from 'src/auth/auth.controller';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../../src/auth/auth.service';
+import { AuthController } from '../../src/auth/auth.controller';
 
 describe('AuthController', () => {
   let controller: AuthController;
   const mockAuthService = {
     signup: jest.fn(),
-    signin: jest.fn(),
+    login: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -34,12 +34,12 @@ describe('AuthController', () => {
   });
 
   it('signin should call AuthService.signin', async () => {
-    mockAuthService.signin.mockResolvedValue({ accessToken: 'jwt-token' });
+    mockAuthService.login.mockResolvedValue({ accessToken: 'jwt-token' });
 
     const dto = { email: 'test@test.com', password: '123456' };
     const result = await controller.signin(dto);
 
-    expect(mockAuthService.signin).toHaveBeenCalledWith(dto.email, dto.password);
+    expect(mockAuthService.login).toHaveBeenCalledWith(dto.email, dto.password);
     expect(result).toEqual({ accessToken: 'jwt-token' });
   });
 
