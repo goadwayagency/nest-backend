@@ -1,8 +1,10 @@
 import { IsEmail, IsNotEmpty, Length, Matches, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
+import xss from 'xss';
 
 export class SignupDto {
   @IsEmail({}, { message: 'Invalid email address' })
+  @Transform(({ value }) => xss(value?.trim()))
   email: string;
 
   @IsNotEmpty({ message: 'Password is required' })
@@ -13,7 +15,7 @@ export class SignupDto {
   password: string;
 
   @IsOptional()
-  @Transform(({ value }) => value?.trim())
+  @Transform(({ value }) => value ? xss(value.trim()) : null)
   @IsNotEmpty({ message: 'Referral code is required' })
   referralCode: string;
 }

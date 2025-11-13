@@ -41,7 +41,7 @@ export class AuthService {
   async signup(dto: SignupDto): Promise<User> {
     // Apply policies
     await this.emailPolicy.validate(dto.email);
-    await this.referralPolicy.validate(dto.referralCode);
+    // await this.referralPolicy.validate(dto.referralCode);
 
     // Hash password
     const hashedPassword = await this.passwordService.hash(dto.password);

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { INotificationHandler } from '../interfaces/notification-handler.interface';
-import { NotificationService } from '../notification.service';
+import { NotificationService } from '../services/notification.service';
 
 @Injectable()
 export class ReferralSignupUIHandler implements INotificationHandler<{ userId: string; referralCode: string }> {
