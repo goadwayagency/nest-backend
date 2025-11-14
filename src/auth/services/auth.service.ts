@@ -3,20 +3,12 @@ import  * as usersRepositoryInterface from '../../users/interfaces/users-reposit
 import { JwtService } from '../jwt/jwt.service';
 import * as bcrypt from 'bcrypt';
 import  * as referralValidatorInterface from '../interfaces/referral-validator.interface';
-import  * as eventBusInterface from '../../events/interfaces/event-bus.interface';
 import { SignupDto } from '../dto/signup.dto';
 import { PasswordService } from './password.service';
 import * as ipolicyInterface from '../policies/ipolicy.interface';
 import { User } from '../../users/user.entity';
-import { SignupInterceptor } from 'src/common/interceptors/signup.interceptor';
 import { EventPublisherService } from 'src/events/publisher/event-publisher.service';
 import * as eventInterface from 'src/events/interfaces/event.interface';
-
-// Change this later for a more Modular option
-export enum BuyerEvents {
-  REFERRAL_SIGNUP = 'REFERRAL_SIGNUP',
-}
-
 
 @Injectable()
 export class AuthService {

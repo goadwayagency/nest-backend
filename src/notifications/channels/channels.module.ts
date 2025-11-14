@@ -4,6 +4,7 @@ import { NotificationChannel } from './notification/notification.channel';
 import { EmailService } from './email/email.service';
 import { EmailChannel } from './email/email.channel';
 import { NotificationsRepository } from '../notifications.repository';
+import { BrevoEmailProvider } from '../providers/brevo-email.provider';
 
 @Module({
   providers: [
@@ -20,7 +21,9 @@ import { NotificationsRepository } from '../notifications.repository';
       provide: 'INotificationsRepository',
       useClass: NotificationsRepository,
     },
+    BrevoEmailProvider,
+    { provide: 'IEmailProvider', useClass: BrevoEmailProvider },
   ],
-  exports: ['CHANNEL_HANDLERS', NotificationService, EmailService],
+  exports: ['CHANNEL_HANDLERS', NotificationService, EmailService, 'IEmailProvider', BrevoEmailProvider],
 })
 export class ChannelsModule {}

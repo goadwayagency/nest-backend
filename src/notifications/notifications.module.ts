@@ -4,6 +4,8 @@ import { EmailService } from './channels/email/email.service';
 import { EmailChannel } from './channels/email/email.channel';
 import { NotificationsRepository } from './notifications.repository';
 import { ChannelsModule } from './channels/channels.module';
+import { NotificationService } from './channels/notification/notification.service';
+import { BrevoEmailProvider } from './providers/brevo-email.provider';
 
 @Module({
   imports: [ChannelsModule],
@@ -21,7 +23,13 @@ import { ChannelsModule } from './channels/channels.module';
       useFactory: (...handlers: any[]) => handlers,
       inject: [NotificationChannel, EmailChannel],
     },
+    NotificationService, 
   ],
-  exports: ['CHANNEL_HANDLERS', EmailService],
+  exports: [
+    'CHANNEL_HANDLERS',
+    EmailService,
+    NotificationService,
+    'INotificationsRepository',
+  ],
 })
 export class NotificationsModule {}

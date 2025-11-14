@@ -1,4 +1,4 @@
-export interface ChannelHandler {
-    readonly channelName: string;
-    send(payload: any): Promise<void>;
-    }
+export interface ChannelHandler<T = any> {
+  readonly channelName: string;
+  send(payload: T, eventType?: string): Promise<void>;
+}

@@ -1,28 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { ReferralSignupHandler } from '../handlers/referral-signup/referral-signup.handler';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { IEventBus } from '../interfaces/event.interface';
+import { EventHandler } from '../handlers/event.handler';
+import { EVENT_HANDLERS } from '../tokens';
 
-interface EventHandler {
-  handle(payload: any): Promise<void>;
-}
 
 @Injectable()
 export class EventBusService implements IEventBus {
-  private readonly handlers: Record<string, EventHandler>;
-
-  constructor(private readonly referralHandler: ReferralSignupHandler) {
-    this.handlers = {
-      'REFERRAL_SIGNUP': this.referralHandler,
-      // add handler here
-    };
-  }
+  private readonly logger = new Logger(EventBusService.name);
+  constructor(@Inject(EVENT_HANDLERS) private readonly handlers: EventHandler[]) {}
 
   async emit(event: { type: string; payload: any }) {
-    const handler = this.handlers[event.type];
-    if (handler) {
-      await handler.handle(event.payload);
-    } else {
+    this.logger.debug(`Registered data====> ${JSON.stringify(event.payload, null, 2)}`);
+    const matchingHandlers = this.handlers.filter(h => h.supports(event.type));
+
+    if (!matchingHandlers.length) {
       console.warn(`No handler found for event type: ${event.type}`);
+      return;
+    }
+
+    for (const handler of matchingHandlers) {
+      await handler.handle(event.payload);
     }
   }
 }
