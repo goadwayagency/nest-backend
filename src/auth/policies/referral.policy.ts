@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { IPolicy } from './ipolicy.interface';
-import { ReferralService } from '../referral/referral.service';
+import { ReferralService } from '../services/referral.service';
 
 @Injectable()
 export class ReferralPolicy implements IPolicy<string | undefined> {

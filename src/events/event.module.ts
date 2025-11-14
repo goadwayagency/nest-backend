@@ -1,33 +1,20 @@
-import { Module, Global, Inject, OnModuleInit } from '@nestjs/common'; 
-import { InMemoryEventBus } from './event-bus'; 
-import { ReferralSignupUIHandler } from 'src/notifications/handlers/referral-signup-ui.handler';
-import { BuyerEvents } from 'src/auth/services/auth.service';
-import * as eventBusInterface from './interfaces/event-bus.interface';
-import { NotificationsModule } from 'src/notifications/notifications.module';
-import { EventPublisherService } from './services/event-publisher.service';
+import { Module } from '@nestjs/common';
+import { EventChannelDispatcher } from './dispatcher/event-channel-dispatcher.service';
+import { ReferralSignupHandler } from './handlers/referral-signup/referral-signup.handler';
+import { NotificationsModule } from '../notifications/notifications.module';
+import { EventBusService } from './services/event-bus.service';
+import { EventPublisherService } from './publisher/event-publisher.service';
 
-@Global()
+
 @Module({
   imports: [NotificationsModule],
   providers: [
-    { provide: 'IEventBus', useClass: InMemoryEventBus },
+    ReferralSignupHandler,
+    EventChannelDispatcher,
     EventPublisherService,
-    ReferralSignupUIHandler,
+    { provide: 'IEventBus', useClass: EventBusService },
+    EventBusService,
   ],
-  exports: ['IEventBus', EventPublisherService],
+  exports: ['IEventBus', EventChannelDispatcher],
 })
-export class EventModule implements OnModuleInit {
-  constructor(
-    @Inject('IEventBus')
-    private readonly eventBus: eventBusInterface.IEventBus,
-    private readonly referralSignupHandler: ReferralSignupUIHandler,
-  ) {}
-
-  onModuleInit() {
-    this.eventBus.subscribe(
-      BuyerEvents.REFERRAL_SIGNUP,
-      this.referralSignupHandler.handle.bind(this.referralSignupHandler),
-    );
-  }
-}
-
+export class EventsModule { }

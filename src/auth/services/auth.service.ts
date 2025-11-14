@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, Inject } from '@nestjs/common';
+import { Injectable, BadRequestException, Inject, UseInterceptors } from '@nestjs/common';
 import  * as usersRepositoryInterface from '../../users/interfaces/users-repository.interface';
 import { JwtService } from '../jwt/jwt.service';
 import * as bcrypt from 'bcrypt';
@@ -8,8 +8,11 @@ import { SignupDto } from '../dto/signup.dto';
 import { PasswordService } from './password.service';
 import * as ipolicyInterface from '../policies/ipolicy.interface';
 import { User } from '../../users/user.entity';
-import { EventPublisherService } from '../../events/services/event-publisher.service';
+import { SignupInterceptor } from 'src/common/interceptors/signup.interceptor';
+import { EventPublisherService } from 'src/events/publisher/event-publisher.service';
+import * as eventInterface from 'src/events/interfaces/event.interface';
 
+// Change this later for a more Modular option
 export enum BuyerEvents {
   REFERRAL_SIGNUP = 'REFERRAL_SIGNUP',
 }
@@ -27,7 +30,7 @@ export class AuthService {
       private readonly referralValidator: referralValidatorInterface.IReferralValidator,
   
       @Inject('IEventBus')
-      private readonly eventBus: eventBusInterface.IEventBus,
+      private readonly eventBus: eventInterface.IEventBus,
   
       private readonly passwordService: PasswordService,
       private readonly eventPublisher: EventPublisherService,
@@ -37,23 +40,20 @@ export class AuthService {
       private readonly referralPolicy: ipolicyInterface.IPolicy<string | undefined>,
     ) {}
   
-
   async signup(dto: SignupDto): Promise<User> {
     // Apply policies
     await this.emailPolicy.validate(dto.email);
-    // await this.referralPolicy.validate(dto.referralCode);
+    await this.referralPolicy.validate(dto.referralCode);
 
-    // Hash password
     const hashedPassword = await this.passwordService.hash(dto.password);
 
-    // Create user
     const user = await this.usersRepository.create({
       email: dto.email,
       password: hashedPassword,
       referralCode: dto.referralCode,
     });
 
-    // Publish event
+    // Event 1: Buyer Event => Referral Sign-Up
     await this.eventPublisher.publishSignup(user, dto.referralCode);
 
     return user;

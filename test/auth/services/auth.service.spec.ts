@@ -1,46 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventPublisherService } from '../../../src/events/services/event-publisher.service';
 import { BadRequestException } from '@nestjs/common';
 import { AuthService } from '../../../src/auth/services/auth.service';
 import { PasswordService } from '../../../src/auth/services/password.service';
 import { JwtService } from '../../../src/auth/jwt/jwt.service';
 import { SignupDto } from '../../../src/auth/dto/signup.dto';
+import * as bcrypt from 'bcrypt';
+import { EventPublisherService } from '../../../src/events/publisher/event-publisher.service';
 
-// Create mocks for all dependencies
+
+// Mock all dependencies
 const mockUsersRepository = {
   create: jest.fn(),
   findByEmail: jest.fn(),
   saveAuthToken: jest.fn(),
 };
 
-const mockReferralValidator = {
-  validateReferralCode: jest.fn(),
-};
-
-const mockEventBus = {
-  emit: jest.fn(),
-};
-
-const mockPasswordService = {
-  hash: jest.fn(),
-  compare: jest.fn(),
-};
-
-const mockEventPublisher = {
-  publishSignup: jest.fn(),
-};
-
-const mockEmailPolicy = {
-  validate: jest.fn(),
-};
-
-const mockReferralPolicy = {
-  validate: jest.fn(),
-};
-
-const mockJwtService = {
-  sign: jest.fn(),
-};
+const mockReferralValidator = { validate: jest.fn() };
+const mockEventBus = { emit: jest.fn() };
+const mockPasswordService = { hash: jest.fn(), compare: jest.fn() };
+const mockEventPublisher = { publishSignup: jest.fn() };
+const mockEmailPolicy = { validate: jest.fn() };
+const mockReferralPolicy = { validate: jest.fn() };
+const mockJwtService = { sign: jest.fn() };
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -61,8 +42,11 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-
     jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
   describe('signup', () => {
@@ -117,7 +101,7 @@ describe('AuthService', () => {
 
     it('should throw BadRequestException if password does not match', async () => {
       mockUsersRepository.findByEmail.mockResolvedValueOnce(mockUser);
-      jest.spyOn(require('bcrypt'), 'compare').mockResolvedValueOnce(false);
+      jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false);
 
       await expect(service.login(mockUser.email, 'wrongpassword')).rejects.toThrow(
         BadRequestException,
@@ -126,7 +110,7 @@ describe('AuthService', () => {
 
     it('should return user with auth token on success', async () => {
       mockUsersRepository.findByEmail.mockResolvedValueOnce(mockUser);
-      jest.spyOn(require('bcrypt'), 'compare').mockResolvedValueOnce(true);
+      jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(true);
       mockJwtService.sign.mockReturnValueOnce('mockToken');
       mockUsersRepository.saveAuthToken.mockResolvedValueOnce(undefined);
 

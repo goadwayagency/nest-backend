@@ -1,5 +1,3 @@
-export interface IEvent<T = any> {
-    type: string;
-    payload: T;
+export interface IEventBus {
+  emit(event: { type: string; payload: any }): Promise<void>;
   }
-  
