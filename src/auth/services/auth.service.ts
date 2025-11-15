@@ -7,8 +7,8 @@ import { SignupDto } from '../dto/signup.dto';
 import { PasswordService } from './password.service';
 import * as ipolicyInterface from '../policies/ipolicy.interface';
 import { User } from '../../users/user.entity';
-import { EventPublisherService } from 'src/events/publisher/event-publisher.service';
-import * as eventInterface from 'src/events/interfaces/event.interface';
+import { EventPublisherService } from '../../../src/events/publisher/event-publisher.service'
+import * as eventInterface from '../../../src/events/interfaces/event.interface';
 
 @Injectable()
 export class AuthService {

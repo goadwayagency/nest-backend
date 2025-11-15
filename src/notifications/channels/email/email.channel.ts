@@ -1,7 +1,6 @@
-// email.channel.ts
 import { Inject, Injectable } from '@nestjs/common';
 import { ChannelHandler } from '../../../events/dispatcher/channel-handler.interface';
-import * as emailProviderInterface from 'src/notifications/interfaces/email-provider.interface';
+import * as emailProviderInterface from '../../../../src/notifications/interfaces/email-provider.interface'
 
 @Injectable()
 export class EmailChannel implements ChannelHandler {

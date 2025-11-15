@@ -1,6 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { IPolicy } from './ipolicy.interface';
-import * as usersRepositoryInterface from 'src/users/interfaces/users-repository.interface';
+import * as usersRepositoryInterface from '../../../src/users/interfaces/users-repository.interface';
+
 
 
 @Injectable()

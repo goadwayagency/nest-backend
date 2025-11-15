@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventHandler } from '../event.handler';
-import { EventChannelDispatcher } from 'src/events/dispatcher/event-channel-dispatcher.service';
-
+import { EventChannelDispatcher } from '../../../../src/events/dispatcher/event-channel-dispatcher.service'
 @Injectable()
 export class AccountValidationHandler implements EventHandler {
   constructor(private readonly dispatcher: EventChannelDispatcher) {}
