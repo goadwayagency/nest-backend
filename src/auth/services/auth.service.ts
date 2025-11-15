@@ -70,4 +70,12 @@ export class AuthService {
       authToken: accessToken,
     };
   }
+
+  async getCurrentUser(userId: string) {
+    const user = await this.usersRepository.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  }
 }
