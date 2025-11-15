@@ -21,7 +21,7 @@ export class EmailChannel implements ChannelHandler {
         params = { referralCode: payload.referralCode, userEmail: payload.email };
         break;
       case 'ACCOUNT_VALIDATION':
-        templateId = 2; // Brevo template ID for account validation
+        templateId = 2;
         params = { userEmail: payload.email };
         break;
     }

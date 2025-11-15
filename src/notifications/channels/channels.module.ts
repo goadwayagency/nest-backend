@@ -26,4 +26,4 @@ import { BrevoEmailProvider } from '../providers/brevo-email.provider';
   ],
   exports: ['CHANNEL_HANDLERS', NotificationService, EmailService, 'IEmailProvider', BrevoEmailProvider],
 })
-export class ChannelsModule {}
+export class ChannelsModule { }

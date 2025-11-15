@@ -5,7 +5,6 @@ import { EmailChannel } from './channels/email/email.channel';
 import { NotificationsRepository } from './notifications.repository';
 import { ChannelsModule } from './channels/channels.module';
 import { NotificationService } from './channels/notification/notification.service';
-import { BrevoEmailProvider } from './providers/brevo-email.provider';
 
 @Module({
   imports: [ChannelsModule],
