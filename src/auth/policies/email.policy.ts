@@ -1,7 +1,6 @@
 import { Injectable, BadRequestException, Inject } from '@nestjs/common';
 import { IPolicy } from './ipolicy.interface';
-import { IUsersRepository } from 'src/users/interfaces/users-repository.interface';
-import { UsersRepository } from 'src/users/users.repository';
+import { UsersRepository } from '../../../src/users/users.repository';
 
 @Injectable()
 export class EmailUniquePolicy implements IPolicy<string> {

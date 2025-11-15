@@ -1,11 +1,8 @@
 // src/sellers/seller.service.ts
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../../users/user.entity';
-import { EventPublisherService } from 'src/events/publisher/event-publisher.service';
+import { EventPublisherService } from '../../../src/events/publisher/event-publisher.service';
 import { UserRole, UserStatus } from '@prisma/client';
-import { UsersRepository } from 'src/users/users.repository';
-import * as usersRepositoryInterface from 'src/users/interfaces/users-repository.interface';
+import * as usersRepositoryInterface from '../../../src/users/interfaces/users-repository.interface';
 
 @Injectable()
 export class SellerService {

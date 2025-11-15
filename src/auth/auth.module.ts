@@ -7,10 +7,10 @@ import { AuthController } from './controllers/auth.controller';
 import { PasswordService } from './services/password.service';
 import { EmailUniquePolicy } from './policies/email.policy';
 import { ReferralPolicy } from './policies/referral.policy';
-import { SignupInterceptor } from 'src/common/interceptors/signup.interceptor';
+import { SignupInterceptor } from '../../src/common/interceptors/signup.interceptor';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { EventsModule } from 'src/events/event.module';
-import { EventPublisherService } from 'src/events/publisher/event-publisher.service';
+import { EventsModule } from '../../src/events/event.module';
+import { EventPublisherService } from '../../src/events/publisher/event-publisher.service';
 
 @Module({
   imports: [UsersModule, EventsModule, EventEmitterModule.forRoot(),],
