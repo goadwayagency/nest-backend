@@ -9,6 +9,8 @@ datasource db {
 
 model User {
   id           String     @id @default(uuid())
+  firstName String?
+  lastName  String?
   email        String     @unique
   password     String
   role         UserRole   @default(BUYER)
@@ -23,6 +25,7 @@ model User {
 
   // Bids the user made
   bids Bid[] @relation("BuyerBids")
+  seller    Seller?
 
   // Chat messages sent/received
   sentChats     ChatMessage[] @relation("FromUserChats")
@@ -135,4 +138,23 @@ model ProductReservation {
   bid     Bid     @relation(fields: [bidId], references: [id], name: "BidReservation")
 
   @@map("product_reservations")
+}
+
+model Seller {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  street       String
+  houseNumber  String
+  country      String
+  postalCode   String
+  idDocument   Bytes?   // Binary data for ID document
+  mobileNumber String
+  acceptTerms  Boolean  @default(false)
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("sellers")
 }

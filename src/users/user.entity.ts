@@ -1,6 +1,8 @@
 // I set the fields null for now just to move forward to the events
 export class User {
   id: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   password?: string;
   referralCode?: string | null;
